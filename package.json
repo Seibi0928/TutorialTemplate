@@ -4,6 +4,7 @@
   "description": "A template to easily start the react tutorial",
   "main": "server.js",
   "author": "",
+  "repository": "TutorialTemplate",
   "scripts": {
     "build": "webpack-cli ./src/app.tsx --config webpack-config.js",
     "build:watch": "webpack-cli ./src/app.tsx --config webpack-config.js --watch --progress",
@@ -12,6 +13,7 @@
     "test:ci": "jest -i --ci --runInBand"
   },
   "devDependencies": {
+    "@testing-library/react": "^10.4.3",
     "@types/jest": "^26.0.3",
     "@types/node": "^8.0.14",
     "@types/react-dom": "^16.9.8",
@@ -32,10 +34,12 @@
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-leaflet": "^2.7.0",
     "style-loader": "^1.2.1",
     "ts-loader": "^7.0.5",
     "webpack-cli": "^3.3.12"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "optionalDependencies": {
+    "fsevents": "^2.1.3"
+  }
 }
