@@ -9,8 +9,7 @@
     "build:watch": "webpack-cli ./src/app.tsx --config webpack-config.js --watch --progress",
     "test": "jest",
     "test:watch": "jest  --watch",
-    "test:ci": "jest -i --ci --runInBand",
-    "start": "node server.js"
+    "test:ci": "jest -i --ci --runInBand"
   },
   "devDependencies": {
     "@types/jest": "^26.0.3",
