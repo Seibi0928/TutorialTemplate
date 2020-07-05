@@ -31,5 +31,8 @@ module.exports = {
         "text",
         "html",
         "cobertura"
+    ],
+    "setupFilesAfterEnv": [
+        "<rootDir>/src/setupTests.ts"
     ]
 };
