@@ -1,11 +1,27 @@
 ﻿import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Hello from './components/Hello';
+import Board from './components/Board';
+import '../stylesheet/app.scss';
 
-export default class App extends React.Component {
+class Game extends React.Component {
     render() {
-        return (<Hello />);
+        return (
+            <div className="game">
+                <div className="game-board">
+                    <Board />
+                </div>
+                <div className="game-info">
+                    <div>{/* status */}</div>
+                    <ol>{/* TODO */}</ol>
+                </div>
+            </div>
+        );
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// ========================================
+
+ReactDOM.render(
+    <Game />,
+    document.getElementById('root')
+);
