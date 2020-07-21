@@ -1,27 +1,58 @@
 ﻿import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Board from './components/Board';
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import { renderRoutes, RouteConfig } from "react-router-config";
+import Game from './components/Game';
+import Hello from './components/Hello';
 import '../stylesheet/app.scss';
 
-class Game extends React.Component {
-    render() {
-        return (
-            <div className="game">
-                <div className="game-board">
-                    <Board />
-                </div>
-                <div className="game-info">
-                    <div>{/* status */}</div>
-                    <ol>{/* TODO */}</ol>
-                </div>
-            </div>
-        );
-    }
-}
+const Root: React.FunctionComponent<any> = ({ route }: { route: RouteConfig }) => (
+    <div>
+        <nav>
+            <ul>
+                <li>
+                    <Link to="/">Hello</Link>
+                </li>
+                <li>
+                    <Link to="/game">Game</Link>
+                </li>
+                <li>
+                    <Link to="/users">Users</Link>
+                </li>
+            </ul>
+        </nav>
+        {renderRoutes(route.routes)}
+    </div>
+);
 
-// ========================================
+const Users = (_: unknown) => <h2>Users</h2>;
+
+const routes: RouteConfig[] = [
+    {
+        component: Root,
+        routes: [
+            {
+                path: "/",
+                exact: true,
+                component: Hello
+            },
+            {
+                path: "/game",
+                exact: true,
+                component: Game
+            },
+            {
+                path: "/users",
+                exact: true,
+                component: Users
+            }
+        ]
+    }
+];
 
 ReactDOM.render(
-    <Game />,
+    <Router>
+        {renderRoutes(routes)}
+    </Router>,
     document.getElementById('root')
 );

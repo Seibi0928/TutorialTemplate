@@ -4,12 +4,15 @@ var express = require('express');
 
 var app = express();
 
-var staticPath = path.join(__dirname, '/');
-app.use(express.static(staticPath));
+app.use(express.static(path.join(__dirname, '/')));
+
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '/', 'index.html'));
+});
 
 // Allows you to set port in the project properties.
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function () {
+app.listen(app.get('port'), function () {
     console.log('listening');
 });
