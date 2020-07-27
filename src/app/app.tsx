@@ -11,17 +11,19 @@ const Root: React.FunctionComponent<any> = ({ route }: { route: RouteConfig }) =
         <nav>
             <ul>
                 <li>
-                    <Link to="/">Hello</Link>
+                    <Link to="/" className="link-button">Hello</Link>
                 </li>
                 <li>
-                    <Link to="/game">Game</Link>
+                    <Link to="/game" className="link-button">Game</Link>
                 </li>
                 <li>
-                    <Link to="/users">Users</Link>
+                    <Link to="/users" className="link-button">Users</Link>
                 </li>
             </ul>
         </nav>
-        {renderRoutes(route.routes)}
+        <div id="mainFrame">
+            {renderRoutes(route.routes)}
+        </div>
     </div>
 );
 
