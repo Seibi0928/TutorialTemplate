@@ -2,10 +2,10 @@
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { renderRoutes, RouteConfig } from "react-router-config";
-import BlogList from './components/Blog/List/BlogList';
-import BlogEditor from './components/Blog/Edit/BlogEditor';
-import WriterList from './components/Writer/List/WriterList';
-import WriterEditor from './components/Writer/Edit/WriterEditor';
+import BlogList from './components/BlogList/BlogList';
+import BlogEditor from './components/BlogEditor/BlogEditor';
+import WriterList from './components/WriterList/WriterList';
+import WriterEditor from './components/WriterEditor/WriterEditor';
 import Login from './components/Login';
 import 'Style/app.scss';
 
