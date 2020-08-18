@@ -2,7 +2,7 @@ import * as React from 'react';
 
 type HelloState = { count: number };
 
-export default class Hello extends React.Component<unknown, HelloState> {
+export default class Login extends React.Component<unknown, HelloState> {
     constructor(_: unknown) {
         super(_);
 

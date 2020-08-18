@@ -2,22 +2,22 @@
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { renderRoutes, RouteConfig } from "react-router-config";
-import Game from './components/Game';
-import Hello from './components/Hello';
-import '../stylesheet/app.scss';
+import BlogList from './components/Blog/List/BlogList';
+import BlogEditor from './components/Blog/Edit/BlogEditor';
+import WriterList from './components/Writer/List/WriterList';
+import WriterEditor from './components/Writer/Edit/WriterEditor';
+import Login from './components/Login';
+import 'Style/app.scss';
 
 const Root: React.FunctionComponent<any> = ({ route }: { route: RouteConfig }) => (
     <div>
         <nav>
             <ul>
                 <li>
-                    <Link to="/" className="link-button">Hello</Link>
+                    <Link to="/blogs" className="link-button">Blogs</Link>
                 </li>
                 <li>
-                    <Link to="/game" className="link-button">Game</Link>
-                </li>
-                <li>
-                    <Link to="/users" className="link-button">Users</Link>
+                    <Link to="/writers" className="link-button">Writers</Link>
                 </li>
             </ul>
         </nav>
@@ -27,8 +27,6 @@ const Root: React.FunctionComponent<any> = ({ route }: { route: RouteConfig }) =
     </div>
 );
 
-const Users = (_: unknown) => <h2>Users</h2>;
-
 const routes: RouteConfig[] = [
     {
         component: Root,
@@ -36,17 +34,25 @@ const routes: RouteConfig[] = [
             {
                 path: "/",
                 exact: true,
-                component: Hello
+                component: Login
             },
             {
-                path: "/game",
+                path: "/blogs",
                 exact: true,
-                component: Game
+                component: BlogList
             },
             {
-                path: "/users",
+                path: "/blogs/:id",
+                component: BlogEditor
+            },
+            {
+                path: "/writers",
                 exact: true,
-                component: Users
+                component: WriterList
+            },
+            {
+                path: "/writers/:writerName",
+                component: WriterEditor
             }
         ]
     }

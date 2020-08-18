@@ -1,4 +1,5 @@
 const webpack = require("webpack");
+const path = require('path');
 
 module.exports = {
     devtool: 'source-map',
@@ -8,6 +9,10 @@ module.exports = {
         filename: "./app-bundle.js"
     },
     resolve: {
+        alias: {
+            'Style': path.resolve(__dirname, './src/stylesheet/'),
+            'Library': path.resolve(__dirname, './src/library/')
+        },
         extensions: ['.Webpack.js', '.web.js', '.ts', '.js', '.jsx', '.tsx', '.css']
     },
     module: {

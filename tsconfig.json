@@ -9,7 +9,12 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "Style/*" : ["src/stylesheet/*"],
+      "Library/*" : ["src/library/*"]
+    }
   },
   "include": [
     "./src/**/__tests__/**/*"
