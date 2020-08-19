@@ -19,3 +19,13 @@ services:
       - "8080:80"
     depends_on:
       - front
+  mock:
+    image: stoplight/prism:3
+    ports:
+      - "4010:4010"
+    command: mock -h 0.0.0.0 /mock.yaml
+    volumes:
+      - ./backend/mock.yaml:/mock.yaml
+    container_name: backend_server
+    depends_on:
+      - front
