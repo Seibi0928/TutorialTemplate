@@ -2,12 +2,12 @@
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { renderRoutes, RouteConfig } from "react-router-config";
-import BlogList from './components/BlogList/BlogList';
-import BlogEditor from './components/BlogEditor/BlogEditor';
-import WriterList from './components/WriterList/WriterList';
-import WriterEditor from './components/WriterEditor/WriterEditor';
-import Login from './components/Login';
-import 'Style/app.scss';
+import ArticleListPage from './components/ArticleList/ArticleList';
+import ArticleEditorPage from './components/ArticleEditor/ArticleEditor';
+import WriterListPage from './components/WriterList/WriterList';
+import WriterEditorPage from './components/WriterEditor/WriterEditor';
+import LoginPage from './components/Login';
+import 'Styles/app.scss';
 
 const Root: React.FunctionComponent<any> = ({ route }: { route: RouteConfig }) => (
     <div>
@@ -34,25 +34,25 @@ const routes: RouteConfig[] = [
             {
                 path: "/",
                 exact: true,
-                component: Login
+                component: LoginPage
             },
             {
                 path: "/blogs",
                 exact: true,
-                component: BlogList
+                component: ArticleListPage
             },
             {
                 path: "/blogs/:id",
-                component: BlogEditor
+                component: ArticleEditorPage
             },
             {
                 path: "/writers",
                 exact: true,
-                component: WriterList
+                component: WriterListPage
             },
             {
                 path: "/writers/:writerName",
-                component: WriterEditor
+                component: WriterEditorPage
             }
         ]
     }

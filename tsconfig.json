@@ -12,8 +12,15 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "Style/*" : ["src/stylesheet/*"],
-      "Library/*" : ["src/library/*"]
+      "Styles/*": [
+        "src/stylesheet/*"
+      ],
+      "Library/*": [
+        "src/app/library/*"
+      ],
+      "Models/*": [
+        "src/app/models/*"
+      ]
     }
   },
   "include": [

@@ -1,3 +1,3 @@
-describe('BlogEditTest', () => {
+describe('ArticleListTest', () => {
     test('テストコード書いて！');
 });

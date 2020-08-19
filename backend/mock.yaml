@@ -1,0 +1,560 @@
+openapi: 3.0.2
+
+info:
+  title: 'hack draft API'
+  version: 0.0.1
+  description: '仕様のたたき'
+
+paths:
+  '/healthcheck':
+    get:
+      tags:
+        - healthcheck
+      responses:
+        '200':
+          description: Ok
+  '/articles':
+    get:
+      tags:
+        - article
+      summary: '記事の一覧の取得/検索'
+      description: '条件に合致する記事の一覧を取得します'
+      parameters: 
+        - name: page
+          in: query
+          description: 'page number'
+          required: false
+          schema:
+            type: integer
+          example: 1
+        - name: writerName
+          in: query
+          description: 'writer name'
+          required: false
+          schema:
+            type: string
+          example: 'YakuNoBainin'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+                example:
+                  - id : 1
+                    title: 'きな粉、風に舞う'
+                    body: '8月12日未明、東京都港区浜松町の交差点にて、きな粉が風に舞っているという目撃情報が弊社に多数寄せられました。'
+                    created_date: '2020-08-12 12:05:00.000'
+                    last_updated_date: '2020-08-12 12:05:00.000'
+                    written_by:
+                      id: '550e8400-e29b-41d4-a716-446655440000'
+                      name: 'YakuNoBainin'
+                      display_name: '光のセールスマン'
+                      created_date: '2020-01-01 00:00:00.000'
+                  - id : 2
+                    title: '極楽浄土が涅槃すぎる！ほんとに行けるの？気になる信者や彼氏は！？'
+                    body: '今回は極楽浄土について調べてみました。いかがでしたか？'
+                    created_date: '2020-08-12 12:10:00.000'
+                    last_updated_date: '2020-08-12 12:10:00.000'
+                    written_by:
+                      id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
+                      name: 'God'
+                      display_name: '不敬罪'
+                      created_date: '0000-01-01 00:00:00.000'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      tags:
+        - article
+      summary: '新規記事の投稿'
+      description: '記事を投稿し、新しいIDを発行します'
+      requestBody:
+        description: '投稿する記事の内容'
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ArticleManuscript'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/articles/{articleId}':
+    get:
+      tags:
+        - article
+      summary: '記事詳細の取得'
+      description: '指定したIDの記事の内容を取得します'
+      parameters:
+        - name: articleId
+          in: path
+          description: '記事ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Article'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    patch:
+      tags:
+        - article
+      summary: '記事内容の更新'
+      description: '指定したIDの記事を更新します'
+      parameters:
+        - name: articleId
+          in: path
+          description: '記事ID'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: '記事の編集内容'
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ArticleManuscript'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - article
+      summary: '記事の削除'
+      description: '指定したIDの記事を削除します'
+      parameters:
+        - name: articleId
+          in: path
+          description: '記事ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409': 
+          description: Conflict
+  '/writers':
+    get:
+      tags:
+        - writer
+      summary: 'ライター一覧の取得/検索'
+      description: '条件に合致するライターの一覧を取得します'
+      parameters: [] #検索条件
+      responses:
+        '200':
+          description: Ok
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Writer'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      tags:
+        - writer
+      summary: '新規ライター登録'
+      description: 'ライターを追加し、新しいIDを発行します'
+      requestBody:
+        description: '新規ライターの情報'
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                display_name:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409': 
+          description: Conflict
+  '/writers/signin':
+    post:
+      tags:
+        - writer
+      summary: 'サインイン'
+      description: 'ライターとしてサインインします'
+      requestBody:
+        description: 'サインインとなるライターの情報'
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  '/writers/{writerName}':
+    get:
+      tags:
+        - writer
+      summary: 'ライター情報の取得'
+      description: '指定したライターの情報を取得します'
+      parameters:
+        - name: writerName
+          in: path
+          description: 'ライターの名前'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Writer'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    patch:
+      tags:
+        - writer
+      summary: 'ライター情報の更新'
+      description: '指定したライターの情報を更新します'
+      parameters:
+        - name: writerName
+          in: path
+          description: '更新対象のライターの名前'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: '新しい表示名'
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                display_name:
+                  type: string
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - writer
+      summary: 'ライターの削除'
+      description: '指定したライターを削除します'
+      parameters:
+        - name: writerName
+          in: path
+          description: 'writer name'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409': 
+          description: Conflict
+  '/writers/authorities':
+    get:
+      tags:
+        - authority
+      summary: '権限一覧の取得'
+      description: 'ライターの権限一覧を取得します'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/Writer'
+                    - $ref: '#/components/schemas/Authority'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/writers/authorities/{writerName}':
+    put:
+      tags:
+        - authority
+      summary: '権限の更新'
+      description: '指定したライターの権限を更新します'
+      parameters:
+        - name: writerName
+          in: path
+          description: '更新対象のライターの名前'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: '新しい権限'
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Authority'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/images':
+    get:
+      tags:
+        - image
+      summary: '画像一覧の取得/検索'
+      description: '条件に合致する画像の一覧を取得します'
+      parameters: [] #検索条件
+      responses:
+        '200':
+          description: Ok
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Image'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      tags:
+        - image
+      summary: '画像アップロード'
+      description: '画像をアップロードし、新しいIDを発行します'
+      requestBody:
+        description: '画像の情報'
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                content:
+                  type: string
+                  format: base64
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        
+components:
+  schemas:
+    Article:
+      type: object
+      required:
+        - id
+        - title
+        - body
+        - created_date
+        - last_updated_date
+        - written_by
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        body:
+          type: string
+        created_date:
+          type: string
+          format: datetime
+        last_updated_date:
+          type: string
+          format: datetime
+        written_by:
+          $ref: '#/components/schemas/Writer'
+      example:
+        id : 2
+        title: 'きな粉、風に舞う'
+        body: '8月12日未明、東京都港区浜松町の交差点にて、きな粉が風に舞っているという目撃情報が弊社に多数寄せられました。'
+        created_date: '2020-08-12 12:05:00.000'
+        last_updated_date: '2020-08-12 12:05:00.000'
+        written_by:
+          id: '550e8400-e29b-41d4-a716-446655440000'
+          name: 'YakuNoBainin'
+          display_name: '光のセールスマン'
+          created_date: '2020-01-01 00:00:00.000'
+    ArticleManuscript:
+      type: object
+      required:
+        - title
+        - body
+        - written_by
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        written_by:
+          $ref: '#/components/schemas/Writer'
+      example:
+        title: 'きな粉、風に舞う'
+        body: '8月12日未明、東京都港区浜松町の交差点にて、きな粉が風に舞っているという目撃情報が弊社に多数寄せられました。'
+        written_by:
+          id: '550e8400-e29b-41d4-a716-446655440000'
+          name: 'YakuNoBainin'
+          display_name: '光のセールスマン'
+          created_date: '2020-01-01 00:00:00.000'
+    Writer:
+      type: object
+      required:
+        - id
+        - name
+        - display_name
+        - created_date
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        display_name:
+          type: string
+        created_date:
+          type: string
+          format: datetime
+      example:
+        id: '550e8400-e29b-41d4-a716-446655440000'
+        name: 'YakuNoBainin'
+        display_name: '光のセールスマン'
+        created_date: '2020-01-01 00:00:00.000'
+    Authority:
+      type: object
+      required:
+        - writer_name
+        - status
+      properties:
+        writer_id:
+          type: string
+          format: uuid
+        status:
+          type: integer
+          format: int8
+      example:
+        id: '550e8400-e29b-41d4-a716-446655440000'
+        status: 1
+    Image:
+      type: object
+      required:
+        - id
+        - name
+        - content
+        - uploaded_date
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        content:
+          type: string
+          format: base64
+        uploaded_date:
+          type: string
+          format: datetime
+        uploaded_by:
+          $ref: '#/components/schemas/Writer'
+      example:
+        id: 'a89e6d7b-f2ec-11e3-bcfb-5c514fe65f28'
+        name: 'chikara_ga_hosiika.jpg'
+        content: '/9j/4AAQSkZJRgABAQAAAQAB...u7hi9E//Z'
+        uploaded_date: '2020-08-12 18:00:00.000'
+        uploaded_by:
+          id: '550e8400-e29b-41d4-a716-446655440000'
+          name: 'YakuNoBainin'
+          display_name: '光のセールスマン'
+          created_date: '2020-01-01 00:00:00.000'

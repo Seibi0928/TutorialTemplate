@@ -10,8 +10,9 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'Style': path.resolve(__dirname, './src/stylesheet/'),
-            'Library': path.resolve(__dirname, './src/library/')
+            'Styles': path.resolve(__dirname, './src/stylesheet/'),
+            'Library': path.resolve(__dirname, './src/app/library/'),
+            'Models': path.resolve(__dirname, './src/app/models/')
         },
         extensions: ['.Webpack.js', '.web.js', '.ts', '.js', '.jsx', '.tsx', '.css']
     },
