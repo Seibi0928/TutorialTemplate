@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:0-12
+FROM node:16.17.0-bullseye-slim
 EXPOSE 3000
 
 ENV NODE_ENV="development"

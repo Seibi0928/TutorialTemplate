@@ -1,4 +1,5 @@
-import * as React from 'react';
+// import * as React from 'react';
+import React from 'react';
 import '../../stylesheet/components/Square.scss'
 
 export default class Square extends React.Component {

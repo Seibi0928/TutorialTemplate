@@ -1,60 +1,29 @@
-﻿import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import { renderRoutes, RouteConfig } from "react-router-config";
-import Game from './components/Game';
-import Hello from './components/Hello';
+﻿import React from 'react';
+import { createRoot } from 'react-dom/client';
+import {
+    BrowserRouter,
+    Link,
+    Outlet,
+    Route,
+    Routes,
+} from "react-router-dom";
+import { Game } from './components/Game';
 import '../stylesheet/app.scss';
+import { Hello } from './components/Hello';
+import { useState } from 'react';
+import { Other } from './Other';
+import { App } from './UISSU';
 
-const Root: React.FunctionComponent<any> = ({ route }: { route: RouteConfig }) => (
-    <div>
-        <nav>
-            <ul>
-                <li>
-                    <Link to="/" className="link-button">Hello</Link>
-                </li>
-                <li>
-                    <Link to="/game" className="link-button">Game</Link>
-                </li>
-                <li>
-                    <Link to="/users" className="link-button">Users</Link>
-                </li>
-            </ul>
-        </nav>
-        <div id="mainFrame">
-            {renderRoutes(route.routes)}
-        </div>
-    </div>
-);
 
-const Users = (_: unknown) => <h2>Users</h2>;
-
-const routes: RouteConfig[] = [
-    {
-        component: Root,
-        routes: [
-            {
-                path: "/",
-                exact: true,
-                component: Hello
-            },
-            {
-                path: "/game",
-                exact: true,
-                component: Game
-            },
-            {
-                path: "/users",
-                exact: true,
-                component: Users
-            }
-        ]
-    }
-];
-
-ReactDOM.render(
-    <Router>
-        {renderRoutes(routes)}
-    </Router>,
-    document.getElementById('root')
-);
+const container = document.getElementById('root');
+if (!container) {
+    throw new Error('The element (id=root) does not exist.');
+}
+createRoot(container).render(<App />);
+    //     <Routes>
+    //         <Route path="/" element={<App />}>
+    //             <Route path="/game" element={<Game />} />
+    //             <Route path="/hello" element={<Game />} />
+    //         </Route>
+    //     </Routes>
+    // </BrowserRouter>

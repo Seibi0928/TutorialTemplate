@@ -3,13 +3,13 @@ services:
   front:
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
      - "3000"  
     volumes:
       - .:/workspace:cached
       - /workspace/node_modules
-    command: /bin/sh -c "npm run build;npm start;while sleep 1000; do :; done" 
+    command: /bin/sh -c "npm run build;while sleep 1000; do :; done" 
     container_name: tutorial_frontend_server
   proxy:
     image: nginx:latest

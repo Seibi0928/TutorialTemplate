@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import Board from './Board';
 import '../../stylesheet/components/Game.scss';
 
-export default class Game extends React.Component {
+export class Game extends React.Component {
     render() {
         return (
             <div className="game">
