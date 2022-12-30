@@ -1,18 +1,15 @@
 'use strict';
-var path = require('path');
-var express = require('express');
+const Webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const webpackConfig = require('./webpack-config.js');
 
-var app = express();
+const compiler = Webpack(webpackConfig);
+const devServerOptions = { ...webpackConfig.devServer, open: true };
+const server = new WebpackDevServer(devServerOptions, compiler);
 
-app.use(express.static(path.join(__dirname, '/')));
+const runServer = async () => {
+  console.log('Starting server...');
+  await server.start();
+};
 
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/', 'index.html'));
-});
-
-// Allows you to set port in the project properties.
-app.set('port', process.env.PORT || 3000);
-
-app.listen(app.get('port'), function () {
-    console.log('listening');
-});
+runServer();
